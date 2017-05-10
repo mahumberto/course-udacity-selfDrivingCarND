@@ -2,10 +2,8 @@
 The Self-Driving Car Engineer Nanodegree is a 9 months program from Udacity in parnership with industry references on Autonomous Driving technologies, such as NVIDIA, Mercedes-Benz, OTTO and DiDi.
 
 The program is divided on 3 terms, with the following main topics:
-- Term 1: Computer Vision (ex: OpenCV, Image transformation, Gradients) and Deep Learning (ex: NNs, CNNs, Behavioral Cloning) - [in-depht syllabus](https://medium.com/self-driving-cars/term-1-in-depth-on-udacitys-self-driving-car-curriculum-ffcf46af0c08)
--
+- Term 1: Computer Vision (ex: OpenCV, Image transformation, Gradients) and Deep Learning (ex: NNs, CNNs, Behavioral Cloning, TensorFlow, Keras) - [in-depht syllabus](https://medium.com/self-driving-cars/term-1-in-depth-on-udacitys-self-driving-car-curriculum-ffcf46af0c08)
 - Term 2: Sensor Fusion (ex: Kallman Filters), Localization (ex: Particle Filters), Control - [in-depth syllabus](https://medium.com/udacity/term-2-in-depth-on-udacitys-self-driving-car-curriculum-775130aae502)
-
 - Term 3: Under devellopment 
 
 I am part of one the first cohorts from this Nanodegree program and am currently enroling Term 2. This repository contain my lesson notes, code and developed projects. 
