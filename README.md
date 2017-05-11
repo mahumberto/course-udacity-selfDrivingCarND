@@ -1,5 +1,5 @@
 # Self-Driving Car Engineer Nanodegree
-The Self-Driving Car Engineer Nanodegree is a 9 months program from Udacity in parnership with industry references on Autonomous Driving technologies, such as NVIDIA, Mercedes-Benz, OTTO and DiDi.
+The Self-Driving Car Engineer Nanodegree is a 9 months program from Udacity co-created with industry references on Autonomous Driving technologies: NVIDIA, Mercedes-Benz, Uber, DiDi, BMW and McLaren.
 
 The program is divided on 3 terms, with the following main topics:
 - Term 1: Computer Vision (ex: OpenCV, Image transformation, Gradients) and Deep Learning (ex: NNs, CNNs, Behavioral Cloning, TensorFlow, Keras) - [in-depht syllabus](https://medium.com/self-driving-cars/term-1-in-depth-on-udacitys-self-driving-car-curriculum-ffcf46af0c08)
