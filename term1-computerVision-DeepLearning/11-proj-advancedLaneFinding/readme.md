@@ -39,7 +39,9 @@ The pipeline is documented at the jupyter notebook [02-proj-advancedLaneFinding.
 ![Pipeline7](./20-output-report/Pipeline7.png)
 
 ## 3. Results
-And also at YouTube:
+There were some really hard sections on the pipeline development, in special to tune the image filters to get mainly lane lines to forward to the convolution step. The final pipeline works perfectly at the reference video, it is however on good light conditions, and the pipeline is certainly still limited.  
+
+The reference video used for this project processed by the pipeline is also available at **YouTube**, click to watch!
 
 [![Advanced Lane Finding](https://img.youtube.com/vi/QwwvT9pDWGM/hqdefault.jpg)](https://youtu.be/QwwvT9pDWGM "Advanced Lane Finding - Click to Watch!")
 
