@@ -21,6 +21,7 @@ I am part of one the first cohorts from this Nanodegree program and am currently
 - Used Computer Vision techniques to transform and filter images, identify lanes and calculate lane curvature 
 - On daylight conditions, the pipeline detects lane lines independent of line color or pavement color change
 - [Project link](term1-computerVision-DeepLearning/11-proj-advancedLaneFinding)
+- Project output: **[YouTube Video](https://www.youtube.com/watch?v=QwwvT9pDWGM)**
 
 ### Term 1: Behavioral Cloning
 - Developed a Deep Learning model with Keras for steering angle control of an autonomous car in a simulator
