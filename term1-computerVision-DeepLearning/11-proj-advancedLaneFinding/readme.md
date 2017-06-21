@@ -13,6 +13,12 @@ The complete camera calibration pipeline is available at [01-proj-cameraCalibrat
 
 The following images present the complete transformation process for one sample image.
 
+![Step1](./20-output-report/Step1.png)
+![Step2](./20-output-report/Step2.png)
+![Step3](./20-output-report/Step3.png)
+![Step4](./20-output-report/Step4.png)
+![Step5](./20-output-report/Step5.png)
+
 ### 2.2. Pipeline
 Core part of this project was the pipeline which involved in summary the following steps:
 - Undistort the input image based on the parameters stored from the Camera Calibration phase
@@ -23,10 +29,21 @@ Core part of this project was the pipeline which involved in summary the followi
 
 The pipeline is documented at the jupyter notebook [02-proj-advancedLaneFinding.ipynb](02-proj-advancedLaneFinding.ipynb). The following images present the pipeline applied to a single test image.
 
-## 3. Results
-And also at YouTube:
+![Pipeline1](./20-output-report/Pipeline1.png)
 
-[![Vehicle Detection and Tracking](https://img.youtube.com/vi/y0NVArxNrOg/hqdefault.jpg)](https://www.youtube.com/watch?v=y0NVArxNrOg "Vehicle Detection and Tracking - Click to Watch!")
+![Pipeline2](./20-output-report/Pipeline2.png)
+![Pipeline3](./20-output-report/Pipeline3.png)
+![Pipeline4](./20-output-report/Pipeline4.png)
+![Pipeline5](./20-output-report/Pipeline5.png)
+![Pipeline6](./20-output-report/Pipeline6.png)
+![Pipeline7](./20-output-report/Pipeline7.png)
+
+## 3. Results
+There were some really hard sections on the pipeline development, in special to tune the image filters to get mainly lane lines to forward to the convolution step. The final pipeline works perfectly at the reference video, it is however on good light conditions, and the pipeline is certainly still limited.  
+
+The reference video used for this project processed by the pipeline is also available at **YouTube**, click to watch!
+
+[![Advanced Lane Finding](https://img.youtube.com/vi/QwwvT9pDWGM/hqdefault.jpg)](https://youtu.be/QwwvT9pDWGM "Advanced Lane Finding - Click to Watch!")
 
 ## 4. Keywords:
 Computer Vision, Image transformation, Camera Calibration, Bird-Eye view, Sobel gradient
