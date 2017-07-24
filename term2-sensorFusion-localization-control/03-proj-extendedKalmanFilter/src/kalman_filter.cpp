@@ -1,4 +1,5 @@
 #include "kalman_filter.h"
+#include <iostream>
 #include <math.h>
 #include <stdio.h>
 
@@ -22,17 +23,18 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
 
 void KalmanFilter::Predict() {
   x_ = F_ * x_;
-  MatrixXd Ft = F_.transpose();
-  P_ = F_ * P_ * Ft + Q_;
+  P_ = F_ * P_ * F_.transpose() + Q_;
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
+  /**
+   * update the state by using Kalman Filter equations
+   */
   VectorXd z_pred = H_ * x_;
+
   VectorXd y = z - z_pred;
-  MatrixXd Ht = H_.transpose();
-  MatrixXd S = H_ * P_ * Ht + R_;
-  MatrixXd Si = S.inverse();
-  MatrixXd K = P * Ht * Si;
+  MatrixXd S = H_ * P_ * H_.transpose() + R_;
+  MatrixXd K = P_ * H_.transpose() * S.inverse();
 
   //new estimate
   x_ = x_ + (K * y);
@@ -42,43 +44,45 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-  //calculate Hj jacobian 
+  /**
+   * update the state by using Extended Kalman Filter equations
+   */
   //recover state parameters
   float px = x_(0);
   float py = x_(1);
   float vx = x_(2);
   float vy = x_(3);
 
-  //pre-compute a set of terms to avoid repeated calculation
-  float c1 = px*px+py*py;
-  float c2 = sqrt(c1);
-  float c3 = (c1*c2);
-
-  //check division by zero
-  if(fabs(c1) < 0.0001){
-    cout << "CalculateJacobian () - Error - Division by Zero" << endl;
-    return;
+  //z_pred helper equations
+  float rho = sqrt(px*px + py*py);
+  if(fabs(rho) < 0.0001) {
+    px += .001;
+    py += .001;
+	rho = sqrt(px*px + py*py);
   }
-  cout << "StepUE1" << endl; //TODO
-  //compute the Jacobian matrix
-  Hj_ << (px/c2), (py/c2), 0, 0,
-        -(py/c1), (px/c1), 0, 0,
-        py*(vx*py - vy*px)/c3, px*(px*vy - py*vx)/c3, px/c2, py/c2;
-  
-  cout << "StepUE2" << endl; //TODO
-  //compute error
+  float phi = atan2(py, px);
+  float rhodot = (px*vx + py*vy)/rho;
+
   VectorXd z_pred(3);
-  z_pred << c2, atan2(py,px), (px*vx + py*vy)/c2;
+  z_pred << rho, phi, rhodot;
+
   VectorXd y = z - z_pred;
-  MatrixXd Ht = Hj_.transpose();
-  MatrixXd S = Hj_ * P_ * Ht + R_;
-  MatrixXd Si = S.inverse();
-  MatrixXd PHt = P_ * Ht;
-  MatrixXd K = PHt * Si;
+
+  //normalize angle
+  float_t const TWO_PI = 2. * M_PI;
+  while(y(1) > M_PI) {
+    y(1) -= TWO_PI;
+  }
+  while(y(1) < -M_PI) {
+    y(1) += TWO_PI;
+  }
+
+  MatrixXd S = H_ * P_ * H_.transpose() + R_;
+  MatrixXd K = P_ * H_.transpose() * S.inverse();
 
   //new estimate
   x_ = x_ + (K * y);
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  P_ = (I - K * Hj_) * P_;
+  P_ = (I - K * H_) * P_;
 }
