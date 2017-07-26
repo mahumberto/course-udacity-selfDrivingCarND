@@ -2,6 +2,7 @@
 #define UKF_H
 
 #include "measurement_package.h"
+#include "tools.h"
 #include "Eigen/Dense"
 #include <vector>
 #include <string>
@@ -27,6 +28,12 @@ public:
 
   ///* state covariance matrix
   MatrixXd P_;
+
+  ///* laser measurement noise covariance matrix
+  MatrixXd R_laser_;
+
+  ///* radar measurement noise covariance matrix
+  MatrixXd R_radar_;
 
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
@@ -63,6 +70,12 @@ public:
 
   ///* Augmented state dimension
   int n_aug_;
+
+  ///* Lidar measurement dimension
+  int n_lidar_;
+
+  ///* Radar measurement dimension
+  int n_radar_;
 
   ///* Sigma point spreading parameter
   double lambda_;
@@ -102,6 +115,59 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+
+private:
+
+  /**
+   * Creates Augmented Sigma Points Matrix based on augmented state, lambda and
+   * covariance matrix (P_) and process noise (Q_)
+   * @param {MatrixXd} Xsig_aug The augmented sigma points
+   */
+  void AugmentedSigmaPoints(MatrixXd& Xsig_aug);
+
+  /**
+   * Predicts Sigma Points matrix (Xsig_pred_) based on elapsed time since
+   * last update
+   * @param {MatrixXd} Xsig_aug The input matrix with augmented sigma points
+   * @param {double} delta_t The time elapsed since last measurement
+   */
+  void SigmaPointPrediction(const MatrixXd& Xsig_aug, const double delta_t);
+
+  /**
+   * Predicts Mean state (x_) And Covariance matrix (P_) based on predicted
+   * Sigma Points matrix (Xsig_pred_)
+   */
+  void PredictMeanAndCovariance();
+
+  /**
+   * Predicts Radar Measurement Mean (z_pred) and Covariance (S) by means of
+   * predicted Sigma Points (Xsig_pred_), Mean (x_) and Covariance (P_)
+   * @param {MatrixXd} Zsig The predicted sigma points in measurement space
+   * @param {VectorXd} z_pred The predicted radar measurement mean vector
+   * @param {MatrixXd} S The predicted radar measurement covariance matrix
+   */
+  void PredictLaserMeasurement(MatrixXd& Zsig, VectorXd& z_pred, MatrixXd& S);
+
+  /**
+   * Predicts Radar Measurement Mean (z_pred) and Covariance (S) by means of
+   * predicted Sigma Points (Xsig_pred_), Mean (x_) and Covariance (P_)
+   * @param {MatrixXd} Zsig The predicted sigma points in measurement space
+   * @param {VectorXd} z_pred The predicted radar measurement mean vector
+   * @param {MatrixXd} S The predicted radar measurement covariance matrix
+   */
+  void PredictRadarMeasurement(MatrixXd& Zsig, VectorXd& z_pred, MatrixXd& S);
+
+  /**
+   * Updates state (x_) and covariance matrix (P_) based on sensor measurement (z)
+   * @param {MatrixXd} Zsig The sigma points in the measurement space
+   * @param {VectorXd} z_pred The predicted sensor measurement mean vector
+   * @param {MatrixXd} S The predicted sensor measurement covariance matrix
+   * @param {VectorXd} z The vector with incoming measurement
+   * @param int n_z The measurement dimension
+   */
+  void UpdateState(const MatrixXd& Zsig, const VectorXd& z_pred,
+                   const MatrixXd& S, const VectorXd& z, const int n_z);
+
 };
 
 #endif /* UKF_H */
