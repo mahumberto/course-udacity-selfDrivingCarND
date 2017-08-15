@@ -10,7 +10,7 @@
 
 class Map {
 public:
-	
+
 	struct single_landmark_s{
 
 		int id_i ; // Landmark ID
@@ -21,7 +21,5 @@ public:
 	std::vector<single_landmark_s> landmark_list ; // List of landmarks in the map
 
 };
-
-
 
 #endif /* MAP_H_ */
