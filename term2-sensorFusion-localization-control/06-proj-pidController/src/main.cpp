@@ -33,15 +33,22 @@ int main()
   uWS::Hub h;
 
   PID pid;
-  // Initialize the pid variable.
-  // The variables were tunned manually by try-error
-  // P gain - It was increased by 0.01 steps until the controller corrected the
-  //          steering in time for the turn. A small P gain would not correct
-  //          enough and the vehicle went off the track.
-  // D gain - It was increased by steps of 0.1 in order to decrease the oscilation
-  //          caused by the P gain.
-  // I gain - Since it was not necessary to correct the bias, no integral gain
-  //          was used.
+  // Initialize the PID Controller.
+  // The variables were tunned manually by try and error for the inputs without
+  // additional control of the throttle command.
+  // P gain - Proportional gain
+  //          It was increased by 0.01 steps until the controller corrected the
+  //          steering in time for the turns. A small P gain would not correct
+  //          enough and the vehicle went off the track. A P gain too big was
+  //          resulting in an oscilating output, very often depassing the input.
+  // D gain - Derivative gain
+  //          It was increased by steps of 0.1 in order to decrease the oscillation
+  //          caused by the P gain. The stop point was when a small and acceptable
+  //          oscilation was achieved.
+  // I gain - Integral gain
+  //          Since it was not necessary to correct a systematic bias (the
+  //          simulator does not tend to one side or the other for a steer
+  //          command of 0), no integral gain was required or used.
   pid.Init(0.14, 0., 0.85);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
